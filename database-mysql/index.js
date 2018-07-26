@@ -30,7 +30,19 @@ var addGroceryItem = function(item, callback) {
   })
 }
 
+var deleteGroceryItem = function(item, callback) {
+  let queryString = `DELETE FROM groceryItems WHERE food='${ item }'`
+  connection.query(queryString, function(err, results) {
+    if (err) {
+      callback (err, null)
+    } else {
+      callback(null, results)
+    }
+  })
+}
+
 module.exports = {
   getGroceryList,
-  addGroceryItem
+  addGroceryItem, 
+  deleteGroceryItem
 }

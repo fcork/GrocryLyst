@@ -3,12 +3,30 @@ var bodyParser = require('body-parser');
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 var db = require('../database-mysql');
 // var items = require('../database-mongo');
+var socket = require('socket.io')
 
 var app = express();
 app.use(bodyParser.json());
 
 // UNCOMMENT FOR REACT
 app.use(express.static(__dirname + '/../react-client/dist'));
+
+var io = socket(server);
+
+io.on('connection', (socket) => {
+  console.log(socket.id);
+  console.log('made socket connection')
+
+  // socket.on('send list', (data) => {
+  //   console.log('used socket!')
+  //   console.log('changed list to: ', data)
+  //   io.sockets.emit('add grocery', data)
+  // })
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})
 
 // UNCOMMENT FOR ANGULAR
 // app.use(express.static(__dirname + '/../angular-client'));
@@ -17,7 +35,7 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 app.get('/list', function (req, res) {
   db.getGroceryList(function(err, data) {
     if(err) {
-      res.sendStatus(500);
+      res.status(500);
     } else {
       console.log(data)
       res.send(data);
@@ -25,7 +43,7 @@ app.get('/list', function (req, res) {
   });
 });
 
-app.post('/list', function (req, res){
+app.post('/list', function (req, res) {
   console.log('item: ', req.body.params.item)
   let item = req.body.params.item;
   db.addGroceryItem(item, function(err, data) {
@@ -38,7 +56,19 @@ app.post('/list', function (req, res){
   })
 })
 
-app.listen(3000, function() {
+app.post('/delete', function(req, res) {
+  console.log('delete item: ', req.body.params.item)
+  db.deleteGroceryItem(req.body.params.item, (err, data) => {
+    if (err) {
+      console.log(err)
+      res.status(500)
+    } else {
+      res.send('successful delete')
+    }
+  })
+})
+
+var server = app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
 

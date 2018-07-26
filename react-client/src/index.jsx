@@ -4,30 +4,37 @@ import $ from 'jquery';
 
 import axios from 'axios';
 import AddGrocery from './components/AddGrocery.jsx';
+// import socketIOClient from 'socket.io-client'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      groceryList: ['apples, bananas']
+      groceryList: ['apples, bananas'], 
     }
     // this.addGrocery = this.addGrocery.bind(this)
-    this.getGroceries = this.getGroceries.bind(this)
+    // this.getGroceries = this.getGroceries.bind(this)
   }
 
   // componentDidMount() {
-    
+  //   // this.getGroceries();
   // }
 
-  getGroceries() {
-    axios.get('/list')
-      .then((response) => {
-        this.setState({groceryList: response})
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  // send() {
+  //   const socket = socketIOClient(this.state.endpoint);
+  //   socket.emit('client action', this.state.color)
+  // }
+
+  // getGroceries() {
+  //   axios.get('/list')
+  //     .then((response) => {
+  //       console.log(response.data)
+  //       this.setState({groceryList: response})
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
 
   // addGrocery(e) {
   //   e.preventDefault();
@@ -41,7 +48,7 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Grocery List</h1>
-      <AddGrocery groceries={ this.state.groceryList } />
+      <AddGrocery />
       {/* <List items={this.state.items}/> */}
       {/* <button>Add Grocery</button> */}
     </div>)
