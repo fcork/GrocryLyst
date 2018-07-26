@@ -3,25 +3,32 @@ var bodyParser = require('body-parser');
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 var db = require('../database-mysql');
 // var items = require('../database-mongo');
-var socket = require('socket.io')
+// var socket = require('socket.io')
+
 
 var app = express();
+var server = require('http').createServer(app)
+var io = require('socket.io')(server)
 app.use(bodyParser.json());
 
-// UNCOMMENT FOR REACT
+server.listen(3000)
+
 app.use(express.static(__dirname + '/../react-client/dist'));
 
-var io = socket(server);
+
+
+
+// var io = socket(server);
 
 io.on('connection', (socket) => {
   console.log(socket.id);
   console.log('made socket connection')
 
-  // socket.on('send list', (data) => {
-  //   console.log('used socket!')
-  //   console.log('changed list to: ', data)
-  //   io.sockets.emit('add grocery', data)
-  // })
+  socket.on('send list', (data) => {
+    console.log('used socket!')
+    console.log('changed list to: ', data)
+    io.emit('update list', data)
+  })
 
   socket.on('disconnect', () => {
     console.log('user disconnected')
@@ -37,7 +44,7 @@ app.get('/list', function (req, res) {
     if(err) {
       res.status(500);
     } else {
-      console.log(data)
+      console.log('get list datat: ', data)
       res.send(data);
     }
   });
@@ -68,7 +75,7 @@ app.post('/delete', function(req, res) {
   })
 })
 
-var server = app.listen(3000, function() {
-  console.log('listening on port 3000!');
-});
+// var server = app.listen(3000, function() {
+//   console.log('listening on port 3000!');
+// });
 

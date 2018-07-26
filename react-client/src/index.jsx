@@ -49,8 +49,6 @@ class App extends React.Component {
     return (<div>
       <h1>Grocery List</h1>
       <AddGrocery />
-      {/* <List items={this.state.items}/> */}
-      {/* <button>Add Grocery</button> */}
     </div>)
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client'
@@ -17,10 +17,11 @@ class AddGrocery extends React.Component {
     this.getGroceries = this.getGroceries.bind(this)
     this.renderInput = this.renderInput.bind(this)
     this.addGrocery = this.addGrocery.bind(this)
-    this.socket = socketIOClient('http://localhost:3000')
-    // this.socket.on('add grocery', (data) => {
-    //   this.setState({groceryList: data})
-    // })
+    this.socket = socketIOClient('http://localhost:3000');
+    this.socket.on('update list', (data) => {
+      console.log('socket data: ', data)
+      this.setState({groceryList: data})
+    })
   }
   
   // send() {
@@ -36,7 +37,7 @@ class AddGrocery extends React.Component {
   getGroceries() {
     axios.get('/list')
       .then((response) => {
-        console.log(response.data)
+        console.log('grocery list: ', response.data)
         this.setState({groceryList: response.data})
       })
       .catch((err) => {
@@ -61,7 +62,7 @@ class AddGrocery extends React.Component {
         this.getGroceries()
         // console.log('done')
       })
-      // this.socket.emit('send list', this.state.groceryList)
+      this.socket.emit('update list', this.state.groceryList)
   }
 
   renderDelete(food) {
@@ -72,6 +73,10 @@ class AddGrocery extends React.Component {
         this.getGroceries();
       })
   }
+
+  // componentWillUnmount() {
+  //   this.socket.close()
+  // }
 
   render() {
 
