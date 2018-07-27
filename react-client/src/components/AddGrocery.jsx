@@ -18,10 +18,7 @@ class AddGrocery extends React.Component {
     this.renderInput = this.renderInput.bind(this)
     this.addGrocery = this.addGrocery.bind(this)
     this.socket = socketIOClient('http://localhost:3000');
-    this.socket.on('update list', (data) => {
-      console.log('socket data: ', data)
-      this.setState({groceryList: data})
-    })
+    
   }
   
   // send() {
@@ -31,6 +28,10 @@ class AddGrocery extends React.Component {
 
   componentDidMount() {
     this.getGroceries()
+    this.socket.on('update list', (data) => {
+      console.log('socket data: ', data)
+      this.setState({groceryList: data})
+    })
   }
 
 
@@ -39,6 +40,7 @@ class AddGrocery extends React.Component {
       .then((response) => {
         console.log('grocery list: ', response.data)
         this.setState({groceryList: response.data})
+        this.socket.emit('update list', this.state.groceryList)
       })
       .catch((err) => {
         console.log(err)
@@ -58,11 +60,13 @@ class AddGrocery extends React.Component {
     console.log('currentItem: ', this.state.groceryItem)
     axios.post('/list', {params : {item: this.state.groceryItem}})
       .then((response) => {
-        this.setState({groceryList: [this.state.groceryItem, ...this.state.groceryList]})
+        this.setState({groceryList: [...this.state.groceryList, this.state.groceryItem]})
         this.getGroceries()
         // console.log('done')
+        // this.socket.emit('update list', this.state.groceryList)
+        console.log('client emitted')
       })
-      this.socket.emit('update list', this.state.groceryList)
+      
   }
 
   renderDelete(food) {
@@ -70,8 +74,12 @@ class AddGrocery extends React.Component {
     console.log(food)
     axios.post('/delete', {params: {item: food}})
       .then((response) => {
+        // this.socket.emit('update list', this.state.groceryList)
+        console.log('client emitted')
         this.getGroceries();
+        // this.socket.emit('update list', this.state.groceryList)
       })
+      
   }
 
   // componentWillUnmount() {

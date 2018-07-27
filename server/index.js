@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-// UNCOMMENT THE DATABASE YOU'D LIKE TO USE
+
 var db = require('../database-mysql');
 // var items = require('../database-mongo');
 // var socket = require('socket.io')
@@ -24,7 +24,7 @@ io.on('connection', (socket) => {
   console.log(socket.id);
   console.log('made socket connection')
 
-  socket.on('send list', (data) => {
+  socket.on('update list', (data) => {
     console.log('used socket!')
     console.log('changed list to: ', data)
     io.emit('update list', data)
@@ -35,9 +35,6 @@ io.on('connection', (socket) => {
   })
 })
 
-// UNCOMMENT FOR ANGULAR
-// app.use(express.static(__dirname + '/../angular-client'));
-// app.use(express.static(__dirname + '/../node_modules'));
 
 app.get('/list', function (req, res) {
   db.getGroceryList(function(err, data) {
