@@ -7,8 +7,15 @@ USE groceries;
 CREATE TABLE groceryItems (
   id int NOT NULL AUTO_INCREMENT,
   food varchar(50) NOT NULL,
+  list_id int,
   PRIMARY KEY (ID)
 );
+
+CREATE TABLE groceryLists (
+  id int NOT NULL AUTO_INCREMENT,
+  list VARCHAR(50) NOT NULL,
+  PRIMARY KEY (ID)
+)
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql

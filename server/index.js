@@ -30,14 +30,21 @@ io.on('connection', (socket) => {
     io.emit('update list', data)
   })
 
+  // socket.on('change list', (data) => {
+  //   console.log('used socket for change list')
+  //   io.emit('change list', data)
+  // })
+
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })
 })
 
 
-app.get('/list', function (req, res) {
-  db.getGroceryList(function(err, data) {
+app.get('/grocery', function (req, res) {
+  console.log('get query id: ', req.query.list_id)
+  let list_id = req.query.list_id
+  db.getGroceryList(list_id, (err, data) => {
     if(err) {
       res.status(500);
     } else {
@@ -47,10 +54,12 @@ app.get('/list', function (req, res) {
   });
 });
 
-app.post('/list', function (req, res) {
+app.post('/grocery', function (req, res) {
   console.log('item: ', req.body.params.item)
+  console.log('item: ', req.body.params.list_id)
+  let list_id = req.body.params.list_id;
   let item = req.body.params.item;
-  db.addGroceryItem(item, function(err, data) {
+  db.addGroceryItem(item, list_id, function(err, data) {
     if (err) {
       console.log('server post list error: ', err)
       res.status(500)
@@ -68,6 +77,31 @@ app.post('/delete', function(req, res) {
       res.status(500)
     } else {
       res.send('successful delete')
+    }
+  })
+})
+
+app.post('/list', function(req, res) {
+  console.log('post list name: ', req.body.params.list)
+  let list = req.body.params.list
+  db.addGroceryList(list, (err, data) => {
+    if (err) {
+      res.status(500)
+      console.log(err)
+    } else {
+      res.send('successfully posted list')
+    }
+  })
+})
+
+app.get('/list', function(req, res) {
+  db.getLists((err, data) => {
+    if (err) {
+      res.status(500)
+      console.log(err)
+    } else {
+      console.log('get list data: ', data)
+      res.send(data)
     }
   })
 })

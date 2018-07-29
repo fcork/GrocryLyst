@@ -8,8 +8,8 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-var getGroceryList = function(callback) {
-  let queryString = 'SELECT * FROM groceryItems'
+var getGroceryList = function(list_id, callback) {
+  let queryString = `SELECT * FROM groceryItems where list_id=${list_id}`
   connection.query(queryString, function(err, results, fields) {
     if(err) {
       callback(err, null);
@@ -19,8 +19,8 @@ var getGroceryList = function(callback) {
   });
 };
 
-var addGroceryItem = function(item, callback) {
-  let queryString = `INSERT INTO groceryItems VALUES (default, '${item}')`
+var addGroceryItem = function(item, list_id, callback) {
+  let queryString = `INSERT INTO groceryItems VALUES (default, '${item}', ${list_id})`
   connection.query(queryString, function(err, results) {
     if (err) {
       callback(err, null);
@@ -41,8 +41,32 @@ var deleteGroceryItem = function(item, callback) {
   })
 }
 
+var addGroceryList = function(list, callback) {
+  let queryString = `INSERT INTO groceryLists VALUES (default, '${ list }')`
+  connection.query(queryString, (err, results) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, results)
+    }
+  })
+}
+
+var getLists = function(callback) {
+  let queryString = `SELECT * FROM groceryLists`
+  connection.query(queryString, (err, results) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, results)
+    }
+  })
+}
+
 module.exports = {
   getGroceryList,
   addGroceryItem, 
-  deleteGroceryItem
+  deleteGroceryItem,
+  addGroceryList,
+  getLists
 }
