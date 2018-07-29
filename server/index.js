@@ -11,7 +11,7 @@ var server = require('http').createServer(app)
 var io = require('socket.io')(server)
 app.use(bodyParser.json());
 
-server.listen(3000)
+server.listen(process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/../react-client/dist'));
 
@@ -106,7 +106,7 @@ app.get('/list', function(req, res) {
   })
 })
 
-// var server = app.listen(3000, function() {
+// app.listen(3000, function() {
 //   console.log('listening on port 3000!');
 // });
 
