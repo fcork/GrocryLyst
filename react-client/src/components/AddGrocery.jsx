@@ -13,8 +13,7 @@ class AddGrocery extends React.Component {
       groceryItem: '',
       list: '',
       list_id: 1,
-      lists: [],
-      endpoint: "http://localhost:3000"
+      lists: []
     }
     // this.send = this.send.bind(this)
     this.getGroceries = this.getGroceries.bind(this)
@@ -25,7 +24,7 @@ class AddGrocery extends React.Component {
     this.renderListInput = this.renderListInput.bind(this)
     this.addList = this.addList.bind(this)
     this.renderListId = this.renderListId.bind(this)
-    this.socket = socketIOClient('http://localhost:3000');
+    this.socket = socketIOClient();
     
   }
   
