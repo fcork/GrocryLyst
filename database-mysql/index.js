@@ -6,6 +6,7 @@ var dbURL = process.env.CLEARDB_DATABASE_URL || {
   database : 'groceries'
 }
 
+
 var connection = mysql.createConnection(dbURL);
 
 connection.connect();

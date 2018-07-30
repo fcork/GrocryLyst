@@ -116,6 +116,7 @@ class AddGrocery extends React.Component {
       .then((response) => {
         console.log(response)
         this.setState({lists: [...this.state.lists, this.state.list]})
+        this.getLists()
       })
       .catch((err) => {
         console.log(err)
