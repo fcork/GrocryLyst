@@ -151,7 +151,7 @@ class AddGrocery extends React.Component {
       return (
       <div key={ idx }>
       {grocery.food}
-      {/* <img className="foodPic"src='https://images-na.ssl-images-amazon.com/images/I/71gI-IUNUkL._SX522_.jpg'/> */}
+      <img className="foodPic"src='http://d16d1dwb6hz1ty.cloudfront.net/wp-content/uploads/2017/03/09020329/How-deos-your-grocery-cart-look-like-pic.jpg'/>
       <button onClick={ () => this.renderDelete(grocery.food) }>Remove</button>
       </div>
       )
