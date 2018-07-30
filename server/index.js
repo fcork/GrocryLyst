@@ -7,11 +7,15 @@ var db = require('../database-mysql');
 
 
 var app = express();
-var server = require('http').createServer(app)
-var io = require('socket.io')(server)
+// var server = require('http').createServer(app)
+// var io = require('socket.io')(server)
 app.use(bodyParser.json());
 
-server.listen(process.env.PORT || 3000);
+const port = process.env.PORT || 3000
+var server = app.listen(port, () => {console.log('Listening on port ' + port)})
+var io = require('socket.io').listen(server);
+
+// server.listen(process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/../react-client/dist'));
 
