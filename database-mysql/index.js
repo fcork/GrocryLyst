@@ -1,10 +1,12 @@
 var mysql = require('mysql');
 
-var connection = mysql.createConnection({
+var dbURL = process.env.CLEARDB_DATABASE_URL || {
   user     : 'root',
   password : 'password',
   database : 'groceries'
-});
+}
+
+var connection = mysql.createConnection(dbURL);
 
 connection.connect();
 

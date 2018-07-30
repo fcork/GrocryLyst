@@ -149,9 +149,10 @@ class AddGrocery extends React.Component {
 
     const groceries = this.state.groceryList.map((grocery, idx) => {
       return (
-      <div onClick={ () => this.renderDelete(grocery.food) } key={ idx }>
+      <div key={ idx }>
       {grocery.food}
       {/* <img className="foodPic"src='https://images-na.ssl-images-amazon.com/images/I/71gI-IUNUkL._SX522_.jpg'/> */}
+      <button onClick={ () => this.renderDelete(grocery.food) }>Remove</button>
       </div>
       )
     })
@@ -164,13 +165,17 @@ class AddGrocery extends React.Component {
 
     return (
       <div>
+        <div>
           <input onChange={ this.renderGroceryInput }/>
           <button onClick={ this.addGrocery } >Add Grocery</button>
+        </div>
+        <div>
           <input onChange={ this.renderListInput }/>
           <button onClick={ this.addList }>Add Grocery List</button>
           <select onChange={ this.renderListId }>
             { listSelect }
           </select>
+        </div>
         <div>
           {groceries}
         </div>
