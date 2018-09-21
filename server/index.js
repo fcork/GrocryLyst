@@ -2,27 +2,17 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var db = require('../database-mysql');
-// var items = require('../database-mongo');
-// var socket = require('socket.io')
-
 
 var app = express();
-// var server = require('http').createServer(app)
-// var io = require('socket.io')(server)
 app.use(bodyParser.json());
 
 const port = process.env.PORT || 3000
 var server = app.listen(port, () => {console.log('Listening on port ' + port)})
 var io = require('socket.io').listen(server);
 
-// server.listen(process.env.PORT || 3000);
 
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(express.static(__dirname + '/../client/dist'));
 
-
-
-
-// var io = socket(server);
 
 io.on('connection', (socket) => {
   console.log(socket.id);
@@ -33,11 +23,6 @@ io.on('connection', (socket) => {
     console.log('changed list to: ', data)
     io.emit('update list', data)
   })
-
-  // socket.on('change list', (data) => {
-  //   console.log('used socket for change list')
-  //   io.emit('change list', data)
-  // })
 
   socket.on('disconnect', () => {
     console.log('user disconnected')

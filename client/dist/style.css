@@ -1,0 +1,10 @@
+.foodPic {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+}
+
+.signup-form {
+  margin-left: 3%;
+  margin-right: 30%;
+}
