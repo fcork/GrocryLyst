@@ -79,8 +79,8 @@ class AddGrocery extends React.Component {
 
 
 
-  addGrocery() {
-    // e.preventDefault();
+  addGrocery(e) {
+    e.preventDefault();
     console.log('currentItem: ', this.state.groceryItem)
     axios.post('/grocery', {params : {item: this.state.groceryItem, list_id: this.state.list_id}})
       .then((response) => {
