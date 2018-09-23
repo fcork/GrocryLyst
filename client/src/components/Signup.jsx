@@ -13,14 +13,7 @@ class Signup extends React.Component {
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.toggleTierInfoModal = this.toggleTierInfoModal.bind(this);
     this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
-  }
-
-  toggleTierInfoModal () {
-    this.setState({
-      tierModal: !this.state.tierModal 
-    });
   }
 
   handleFieldChange ( e ) {
