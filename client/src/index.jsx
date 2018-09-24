@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import AddGrocery from './components/AddGrocery.jsx';
 import Signup from './components/Signup.jsx';
+import NavBar from './components/NavBar.jsx';
 import firebase from '../../firebase/firebase.js';
 
 // import socketIOClient from 'socket.io-client'
@@ -13,7 +14,9 @@ class App extends React.Component {
     super(props);
     this.state = { 
       groceryList: ['apples, bananas'], 
-      loggedIn: false
+      loggedIn: false,
+      googleUserData: null,
+      loading: true
     }
 
     this.authListener = this.authListener.bind(this);
@@ -25,6 +28,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.authListener();
+    console.log(this.state.googleUserData)
   }
 
   authListener() {
@@ -102,10 +106,13 @@ class App extends React.Component {
   // }
 
   render () {
-    return (<div>
-      <h1>Grocery List</h1>
-      { this.state.loggedIn ? <AddGrocery /> : <Signup />}
-    </div>)
+    return (
+      <div>
+        <NavBar googleSignIn={ this.googleSignIn }/>
+        <h1>Grocery List</h1>
+        { this.state.loggedIn ? <AddGrocery /> : <Signup />}
+      </div>
+    )
   }
 }
 
