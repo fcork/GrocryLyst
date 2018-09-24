@@ -13,11 +13,21 @@ const NavBar = (props) => {
       </Navbar.Header>
 
       <Navbar.Collapse>
+        { !props.googleUserData
+        ?
         <Nav pullRight>
             <NavItem onClick={ props.googleSignIn }>
               Sign In With Google
             </NavItem>
         </Nav>
+        :
+        <Nav pullRight>
+            <NavItem onClick={ props.googleSignOut }>
+              Sign Out
+            </NavItem>
+        </Nav>
+      }
+        
       </Navbar.Collapse>
     </Navbar>
   );

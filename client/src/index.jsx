@@ -108,7 +108,11 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <NavBar googleSignIn={ this.googleSignIn }/>
+        <NavBar 
+          googleSignIn={ this.googleSignIn }
+          googleSignOut={ this.googleSignOut }
+          googleUserData={ this.state.googleUserData }
+        />
         <h1>Grocery List</h1>
         { this.state.loggedIn ? <AddGrocery /> : <Signup />}
       </div>

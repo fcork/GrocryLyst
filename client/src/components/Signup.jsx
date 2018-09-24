@@ -1,19 +1,16 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import axios from 'axios';
 
 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tierInfoModal: false,
-      phoneNumber: '',
-      validNumber: false,
       username: ''
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
   }
 
   handleFieldChange ( e ) {
@@ -22,11 +19,14 @@ class Signup extends React.Component {
     });
   }
 
-  handlePhoneNumberChange ( e ) {
-    this.isValidPhoneNumber (e.target.value);
-    this.setState({
-      phoneNumber: e.target.value,
-    });
+  handleSubmit () {
+    axios.post('/user', {params: {email: this.props.googleUserData.email, fullName: this.props.googleUserData.displayName, username: this.state.username}})
+      .then(() => {
+        return 
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   render () {
@@ -65,7 +65,9 @@ class Signup extends React.Component {
             </FormGroup>
 
           </Form>
-          <Button>Get Lysting!</Button>
+          <Button onClick={ this.handleSubmit }>
+            Get Lysting!
+          </Button>
 
         </div>
       );
