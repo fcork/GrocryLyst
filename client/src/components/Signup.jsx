@@ -11,6 +11,7 @@ class Signup extends React.Component {
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleFieldChange ( e ) {
@@ -19,15 +20,15 @@ class Signup extends React.Component {
     });
   }
 
-  handleSubmit () {
-    axios.post('/user', {params: {email: this.props.googleUserData.email, fullName: this.props.googleUserData.displayName, username: this.state.username}})
-      .then(() => {
-        return 
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  // handleSubmit () {
+  //   axios.post('/user', {params: {email: this.props.googleUserData.email, fullName: this.props.googleUserData.displayName, username: this.state.username}})
+  //     .then(() => {
+  //       return 
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
 
   render () {
     // if ( this.props.googleUserData ) {
@@ -40,7 +41,7 @@ class Signup extends React.Component {
               <ControlLabel>Email</ControlLabel>
               <FormControl
                 onChange={ this.handleFieldChange }
-                // value={ this.props.googleUserData.email }
+                value={ this.props.googleUserData.email }
                 disabled="true"/>
             </FormGroup>
 
@@ -48,7 +49,7 @@ class Signup extends React.Component {
               <ControlLabel>Full Name</ControlLabel>
               <FormControl
                 onChange={ this.handleFieldChange }
-                // value={ this.props.googleUserData.displayName }
+                value={ this.props.googleUserData.displayName }
                 disabled="true"/>
             </FormGroup>
 
@@ -65,7 +66,7 @@ class Signup extends React.Component {
             </FormGroup>
 
           </Form>
-          <Button onClick={ this.handleSubmit }>
+          <Button onClick={ () => this.props.handleSignUp(this.state.username) }>
             Get Lysting!
           </Button>
 

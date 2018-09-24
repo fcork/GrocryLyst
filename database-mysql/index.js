@@ -93,10 +93,45 @@ var getLists = function(callback) {
   })
 }
 
+const getUserByEmail = function(email, callback) {
+  let queryString = `SELECT * FROM users WHERE email = '${ email }'`;
+  connectionPool.getConnection((err, connection) => {
+    if (err) console.log(err)
+    else {
+      connection.query(queryString, function(err, results, fields) {
+        connection.release()
+        if(err) {
+          callback(err, null);
+        } else {
+          callback(null, results);
+        }
+      });
+    }
+  })
+}
+
+const addUser = function(fullName, email, username, callback) {
+  let queryString = `INSERT INTO users (fullName, email, username) Values ('${ fullName }', '${ email }', '${ username }')`
+  connectionPool.getConnection((err, connection) => {
+    if (err) console.log(err)
+    else {
+      connection.query(queryString, (err, results) => {
+        if (err) {
+          callback(err, null)
+        } else {
+          callback(null, results)
+        }
+      })
+    }
+  })
+}
+
 module.exports = {
   getGroceryList,
   addGroceryItem, 
   deleteGroceryItem,
   addGroceryList,
-  getLists
+  getLists,
+  addUser,
+  getUserByEmail
 }

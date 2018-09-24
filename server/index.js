@@ -95,6 +95,34 @@ app.get('/list', function(req, res) {
   })
 })
 
+app.get('/user', function(req, res) {
+  let email = req.query.email;
+  db.getUserByEmail(email, (err, data) => {
+    if (err) {
+      res.status(500);
+      console.log(err);
+    } else {
+      console.log('got user infro: ', data)
+      res.send(data)
+    }
+  })
+})
+
+app.post('/user', function(req, res) {
+  let fullName = req.body.params.fullName;
+  let email = req.body.params.email;
+  let username = req.body.params.username;
+  db.addUser(fullName, email, username, (err, data) => {
+    if (err) {
+      res.status(500)
+      console.log(err)
+    } else {
+      console.log('user added!')
+      res.send('user added!')
+    }
+  })
+})
+
 // app.listen(3000, function() {
 //   console.log('listening on port 3000!');
 // });

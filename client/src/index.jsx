@@ -14,14 +14,16 @@ class App extends React.Component {
     super(props);
     this.state = { 
       groceryList: ['apples, bananas'], 
-      loggedIn: false,
+      signedUp: false,
       googleUserData: null,
+      userStats: null,
       loading: true
     }
 
     this.authListener = this.authListener.bind(this);
     this.googleSignIn = this.googleSignIn.bind(this);
     this.googleSignOut = this.googleSignOut.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
     // this.addGrocery = this.addGrocery.bind(this)
     // this.getGroceries = this.getGroceries.bind(this)
   }
@@ -29,6 +31,7 @@ class App extends React.Component {
   componentDidMount() {
     this.authListener();
     console.log(this.state.googleUserData)
+    console.log(this.state.signedUp)
   }
 
   authListener() {
@@ -75,6 +78,31 @@ class App extends React.Component {
       });
   }
 
+  mapDBUserDataToState () {
+    axios.get('/user', {params: {email: this.state.googleUserData.email}})
+      .then((response) => {
+        this.setState({
+          playerData: response
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    
+  }
+
+  handleSignUp (username) {
+    axios.post('/user', {params: {email: this.state.googleUserData.email, fullName: this.state.googleUserData.displayName, username: username}})
+      .then(() => {
+        this.setState({signedUp: true})
+        return 
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+  }
+
 
   // componentDidMount() {
   //   // this.getGroceries();
@@ -114,7 +142,15 @@ class App extends React.Component {
           googleUserData={ this.state.googleUserData }
         />
         <h1>Grocery List</h1>
-        { this.state.loggedIn ? <AddGrocery /> : <Signup />}
+        {!this.state.googleUserData ? <div>Welcome!</div> : 
+        this.state.signedUp 
+          ? 
+          <AddGrocery /> 
+          : 
+          <Signup 
+          googleUserData={ this.state.googleUserData }
+          handleSignUp={ this.handleSignUp }
+          />}
       </div>
     )
   }
