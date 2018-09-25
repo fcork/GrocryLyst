@@ -24,14 +24,16 @@ class App extends React.Component {
     this.googleSignIn = this.googleSignIn.bind(this);
     this.googleSignOut = this.googleSignOut.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
+    this.mapDBUserDataToState = this.mapDBUserDataToState.bind(this);
     // this.addGrocery = this.addGrocery.bind(this)
     // this.getGroceries = this.getGroceries.bind(this)
   }
 
   componentDidMount() {
     this.authListener();
+    // this.mapDBUserDataToState();
     console.log(this.state.googleUserData)
-    console.log(this.state.signedUp)
+    console.log(this.state.userStats)
   }
 
   authListener() {
@@ -40,7 +42,8 @@ class App extends React.Component {
         this.setState({
           googleUserData: Object.assign( {}, user.providerData[0] ),
           loading: false
-        });
+        }, this.mapDBUserDataToState);
+        // this.mapDBUserDataToState();
         console.log(user.providerData[0]);
       } else {
         this.setState({
@@ -58,6 +61,7 @@ class App extends React.Component {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect( provider )
       .then( () => {
+        // this.mapDBUserDataToState();
         return;
       })
       .catch( (err) => {
@@ -82,8 +86,8 @@ class App extends React.Component {
     axios.get('/user', {params: {email: this.state.googleUserData.email}})
       .then((response) => {
         this.setState({
-          playerData: response
-        });
+          userStats: response.data[0]
+        }, () => console.log('user stats: ',this.state.userStats));
       })
       .catch((err) => {
         console.log(err);
@@ -94,7 +98,8 @@ class App extends React.Component {
   handleSignUp (username) {
     axios.post('/user', {params: {email: this.state.googleUserData.email, fullName: this.state.googleUserData.displayName, username: username}})
       .then(() => {
-        this.setState({signedUp: true})
+        // this.setState({signedUp: true})
+        this.mapDBUserDataToState();
         return 
       })
       .catch((err) => {
@@ -143,14 +148,17 @@ class App extends React.Component {
         />
         <h1>Grocery List</h1>
         {!this.state.googleUserData ? <div>Welcome!</div> : 
-        this.state.signedUp 
+        !this.state.userStats
           ? 
-          <AddGrocery /> 
-          : 
-          <Signup 
+
+           <Signup 
           googleUserData={ this.state.googleUserData }
           handleSignUp={ this.handleSignUp }
-          />}
+          />
+         
+          : 
+           <AddGrocery /> 
+         }
       </div>
     )
   }

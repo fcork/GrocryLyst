@@ -16,7 +16,7 @@ const NavBar = (props) => {
         { !props.googleUserData
         ?
         <Nav pullRight>
-            <NavItem onClick={ props.googleSignIn }>
+            <NavItem onClick={ () => props.googleSignIn() }>
               Sign In With Google
             </NavItem>
         </Nav>
