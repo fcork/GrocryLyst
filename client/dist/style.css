@@ -23,6 +23,6 @@
 .loading-spinner {
   position: fixed;
   left: 50%;
-  top: 35%;
+  top: 30%;
   transform: translateX(-50%);
 }
