@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client'
 import { Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
- 
-
 
 class AddGrocery extends React.Component {
   constructor(props) {
@@ -15,7 +13,7 @@ class AddGrocery extends React.Component {
       list_id: 1,
       lists: []
     }
-    // this.send = this.send.bind(this)
+    
     this.getGroceries = this.getGroceries.bind(this)
     this.getLists = this.getLists.bind(this)
     this.renderGroceryInput = this.renderGroceryInput.bind(this)

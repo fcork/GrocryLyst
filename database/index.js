@@ -1,17 +1,13 @@
 var mysql = require('mysql');
 
-var dbURL = process.env.CLEARDB_DATABASE_URL || {
-  user     : 'root',
-  password : 'password',
-  database : 'groceries'
-}
+var dbURL = require('./config.js');
 
 
 var connectionPool = mysql.createPool(dbURL);
 
 // connection.connect();
 
-var getGroceryList = function(list_id, callback) {
+const getGroceryList = function(list_id, callback) {
   let queryString = `SELECT * FROM groceryItems where list_id=${list_id}`
   connectionPool.getConnection((err, connection) => {
     if (err) console.log(err)
@@ -29,7 +25,7 @@ var getGroceryList = function(list_id, callback) {
   
 };
 
-var addGroceryItem = function(item, list_id, callback) {
+const addGroceryItem = function(item, list_id, callback) {
   let queryString = `INSERT INTO groceryItems VALUES (default, '${item}', ${list_id})`
   connectionPool.getConnection((err, connection) => {
     if (err) console.log(err)
@@ -45,7 +41,7 @@ var addGroceryItem = function(item, list_id, callback) {
   })
 }
 
-var deleteGroceryItem = function(item, callback) {
+const deleteGroceryItem = function(item, callback) {
   let queryString = `DELETE FROM groceryItems WHERE food='${ item }'`
   connectionPool.getConnection((err, connection) => {
     if (err) console.log(err)
@@ -61,7 +57,7 @@ var deleteGroceryItem = function(item, callback) {
   })
 }
 
-var addGroceryList = function(list, callback) {
+const addGroceryList = function(list, callback) {
   let queryString = `INSERT INTO groceryLists VALUES (default, '${ list }')`
   connectionPool.getConnection((err, connection) => {
     if (err) console.log(err)
@@ -77,7 +73,7 @@ var addGroceryList = function(list, callback) {
   })
 }
 
-var getLists = function(callback) {
+const getLists = function(callback) {
   let queryString = `SELECT * FROM groceryLists`
   connectionPool.getConnection((err, connection) => {
     if (err) console.log(err)

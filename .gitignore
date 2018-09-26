@@ -4,3 +4,4 @@ firebase/
 client/dist/bundle.js
 package-lock.json
 .DS_Store
+database/config.js
