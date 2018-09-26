@@ -8,3 +8,21 @@
   margin-left: 3%;
   margin-right: 30%;
 }
+
+.headline {
+  text-align: center;
+}
+
+.welcome {
+  background-image: url('https://img-new.cgtrader.com/items/725721/20162b0397/groceries-3d-model-max-obj-fbx.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 200vh;
+}
+
+.loading-spinner {
+  position: fixed;
+  left: 50%;
+  top: 35%;
+  transform: translateX(-50%);
+}

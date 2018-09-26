@@ -5,7 +5,9 @@ import axios from 'axios';
 import AddGrocery from './components/AddGrocery.jsx';
 import Signup from './components/Signup.jsx';
 import NavBar from './components/NavBar.jsx';
+import Welcome from './components/Welcome.jsx';
 import firebase from '../../firebase/firebase.js';
+import { RingLoader } from 'react-spinners';
 
 // import socketIOClient from 'socket.io-client'
 
@@ -139,6 +141,18 @@ class App extends React.Component {
   // }
 
   render () {
+    if ( this.state.loading ) {
+      return (
+        <div className="loading-spinner">
+          <RingLoader
+            sizeUnit={'px'}
+            size={200}
+            color={'black'}
+            loading={ this.state.loading }
+          />
+        </div>
+      );
+    }
     return (
       <div>
         <NavBar 
@@ -146,8 +160,8 @@ class App extends React.Component {
           googleSignOut={ this.googleSignOut }
           googleUserData={ this.state.googleUserData }
         />
-        <h1>Grocery List</h1>
-        {!this.state.googleUserData ? <div>Welcome!</div> : 
+        
+        {!this.state.googleUserData ? <Welcome /> : 
         !this.state.userStats
           ? 
 
