@@ -122,6 +122,22 @@ const addUser = function(fullName, email, username, callback) {
   })
 }
 
+const getAllUsers = function(callback) {
+  let queryString = `SELECT * FROM users`
+  connectionPool.getConnection((err, connection) => {
+    if (err) console.log(err)
+    else {
+      connection.query(queryString, (err, results) => {
+        if (err) {
+          callback(err, null)
+        } else {
+          callback(null, results)
+        }
+      })
+    }
+  })
+}
+
 module.exports = {
   getGroceryList,
   addGroceryItem, 
@@ -129,5 +145,6 @@ module.exports = {
   addGroceryList,
   getLists,
   addUser,
-  getUserByEmail
+  getUserByEmail,
+  getAllUsers
 }

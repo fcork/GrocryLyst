@@ -121,7 +121,7 @@ class App extends React.Component {
           googleSignOut={ this.googleSignOut }
           googleUserData={ this.state.googleUserData }
         />
-        
+
         {!this.state.googleUserData ? <Welcome /> : 
         !this.state.userStats
           ? 
@@ -132,7 +132,9 @@ class App extends React.Component {
           />
          
           : 
+          <div>
            <AddGrocery /> 
+          </div>
          }
       </div>
     )

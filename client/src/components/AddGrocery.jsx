@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client'
+import Shared from './Shared.jsx';
 import { Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
 
 class AddGrocery extends React.Component {
@@ -13,7 +14,7 @@ class AddGrocery extends React.Component {
       list_id: 1,
       lists: []
     }
-    
+
     this.getGroceries = this.getGroceries.bind(this)
     this.getLists = this.getLists.bind(this)
     this.renderGroceryInput = this.renderGroceryInput.bind(this)
@@ -72,7 +73,6 @@ class AddGrocery extends React.Component {
   renderGroceryInput(e) {
     e.preventDefault();
     this.setState({groceryItem: e.target.value})
-    console.log('state: ', this.state.groceryItem)
   }
 
 
@@ -164,6 +164,7 @@ class AddGrocery extends React.Component {
 
     return (
       <div className='signup-form'>
+      <Shared />
         <div>
 
           <Form horizontal>
@@ -215,7 +216,6 @@ class AddGrocery extends React.Component {
         <div>
           {groceries}
         </div>
-        <h3>{ this.state.groceryItem }</h3>
       </div>
     )
   }

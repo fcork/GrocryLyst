@@ -27,6 +27,7 @@
     "mongoose": "^4.8.6",
     "mysql": "^2.13.0",
     "react": "^15.4.2",
+    "react-autosuggest": "^9.4.2",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^15.4.2",
     "react-spinners": "^0.4.5",

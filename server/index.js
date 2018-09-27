@@ -123,6 +123,18 @@ app.post('/user', function(req, res) {
   })
 })
 
+app.get('/users', function(req, res) {
+  db.getAllUsers((err, data) => {
+    if (err) {
+      res.status(500)
+      console.log(err)
+    } else {
+      console.log('get all users: ', data)
+      res.send(data)
+    }
+  })
+})
+
 // app.listen(3000, function() {
 //   console.log('listening on port 3000!');
 // });
