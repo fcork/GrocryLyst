@@ -135,6 +135,19 @@ app.get('/users', function(req, res) {
   })
 })
 
+app.post('/connections', function(req, res) {
+  let email = req.body.params.email;
+  let listId = req.body.params.list;
+  db.addConnection(email, listId, (err, data) => {
+    if (err) {
+      res.status(500)
+      console.log(err)
+    } else {
+      res.send('user added')
+    }
+  })
+})
+
 // app.listen(3000, function() {
 //   console.log('listening on port 3000!');
 // });

@@ -29,7 +29,7 @@ class App extends React.Component {
   componentDidMount() {
     this.authListener();
     console.log(this.state.googleUserData)
-    console.log(this.state.userStats)
+    // console.log('user stats :',this.state.userStats)
   }
 
   authListener() {
@@ -122,7 +122,10 @@ class App extends React.Component {
           googleUserData={ this.state.googleUserData }
         />
 
-        {!this.state.googleUserData ? <Welcome /> : 
+        {!this.state.googleUserData 
+        ? 
+        <Welcome /> 
+        : 
         !this.state.userStats
           ? 
 

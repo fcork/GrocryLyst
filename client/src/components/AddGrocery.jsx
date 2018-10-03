@@ -164,7 +164,7 @@ class AddGrocery extends React.Component {
 
     return (
       <div className='signup-form'>
-      <Shared />
+      <Shared listId={this.state.list_id}/>
         <div>
 
           <Form horizontal>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import SearchUsers from './SearchUsers.jsx';
+import axios from 'axios';
 
 class Shared extends React.Component {
   constructor(props) {
@@ -9,7 +10,10 @@ class Shared extends React.Component {
       connections: [],
       modalOpen: false
     }
+
     this.hideModal = this.hideModal.bind(this);
+    this.addConnection = this.addConnection.bind(this);
+
   }
 
   handleShareClick() {
@@ -18,6 +22,20 @@ class Shared extends React.Component {
 
   hideModal() {
     this.setState({modalOpen: false})
+  }
+
+  addConnection (email) {
+    axios.post('/connections', 
+      {params: {
+        list: this.props.listId,
+        email: email
+      }})
+    .then(() => {
+      return;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render () {
@@ -37,10 +55,12 @@ class Shared extends React.Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <SearchUsers />
+
+            <SearchUsers addConnection={ this.addConnection }/>
+
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.hideModal}>Close</Button>
+            <Button onClick={this.hideModal}>Close!</Button>
           </Modal.Footer>
         </Modal>
     </div>

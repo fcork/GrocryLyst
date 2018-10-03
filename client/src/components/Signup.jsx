@@ -11,7 +11,7 @@ class Signup extends React.Component {
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   handleFieldChange ( e ) {
@@ -20,18 +20,7 @@ class Signup extends React.Component {
     });
   }
 
-  // handleSubmit () {
-  //   axios.post('/user', {params: {email: this.props.googleUserData.email, fullName: this.props.googleUserData.displayName, username: this.state.username}})
-  //     .then(() => {
-  //       return 
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
-
   render () {
-    // if ( this.props.googleUserData ) {
       return (    
         <div className="signup-form center-text">
           <h3>Get Started</h3>

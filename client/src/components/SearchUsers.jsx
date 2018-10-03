@@ -1,6 +1,7 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
 
 class SearchUsers extends React.Component {
   constructor() {
@@ -91,15 +92,20 @@ class SearchUsers extends React.Component {
     };
 
     return (
-      <Autosuggest 
-        suggestions={ this.state.suggestions }
-        onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
-        onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
-        getSuggestionValue={ this.getSuggestionValue }
-        inputProps={ inputProps }
-        renderSuggestion={ this.renderSuggestion }
-        onSuggestionSelected={ () => { return; } }
-      />
+      <div>
+        <Autosuggest 
+          suggestions={ this.state.suggestions }
+          onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
+          onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
+          getSuggestionValue={ this.getSuggestionValue }
+          inputProps={ inputProps }
+          renderSuggestion={ this.renderSuggestion }
+          onSuggestionSelected={ () => { return; } }
+        />
+        <Button onClick={ this.props.addConnection(this.state.value)}>
+          Add Connection!
+        </Button>
+      </div>
     );
   }
 }

@@ -138,6 +138,22 @@ const getAllUsers = function(callback) {
   })
 }
 
+const addConnection = function(email, listId, callback) {
+  let queryString = `UPDATE users SET list_id=${listId} WHERE email='${email}'`
+  connectionPool.getConnection((err, connection) => {
+    if (err) console.log(err)
+    else {
+      connection.query(queryString, (err, results) => {
+        if (err) {
+          callback(err, null)
+        } else {
+          callback(null, results)
+        }
+      })
+    }
+  })
+}
+
 module.exports = {
   getGroceryList,
   addGroceryItem, 
@@ -146,5 +162,6 @@ module.exports = {
   getLists,
   addUser,
   getUserByEmail,
-  getAllUsers
+  getAllUsers,
+  addConnection
 }
